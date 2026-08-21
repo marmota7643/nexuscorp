@@ -20,10 +20,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: gradle
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
       - name: Install dependencies
         run: npm install
       - name: Build web app
-        run: npm run build --if-present
+        run: npm run build
+      - name: Create Android project
+        run: npx cap add android
       - name: Sync Capacitor
         run: npx cap sync android
       - name: Build APK
