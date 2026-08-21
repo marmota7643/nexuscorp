@@ -1,28 +1,30 @@
 // main.js - Inicializador del Juego
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializar almacenamiento
+document.addEventListener('DOMContentLoaded', async () => {
+    // Cargar sistemas corporativos nuevos antes de inicializar el juego.
+    const loadScript = (src) => new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = reject;
+        document.head.appendChild(s);
+    });
+    try {
+        await loadScript('js/corporate.js');
+        await loadScript('js/supplychain.js');
+    } catch (e) {
+        console.error('NexusCorp: no se pudieron cargar módulos corporativos', e);
+    }
+
     LocalSave.init();
-    
-    // 2. Inicializar UI (almacena elementos, vincula eventos)
     UI.init();
-    
-    // 3. Cargar juego guardado
     const restored = LocalSave.load();
-    
-    // 4. Inicializar módulos que necesitan carga posterior
     if (typeof Research !== 'undefined' && Research.init) Research.init();
-    
-    // 5. Actualizar toda la UI
+    if (typeof Corporate !== 'undefined' && Corporate.init) Corporate.init();
+    if (typeof SupplyChain !== 'undefined' && SupplyChain.init) SupplyChain.init();
     UI.updateAll();
-    
-    // 6. Iniciar bucle del juego
     Engine.init();
-    
-    // 7. Sincronización en la nube
     if (typeof CloudSync !== 'undefined' && CloudSync.init) CloudSync.init();
-    
-    // 8. Chequeo de admin - mostrar navegación si fue desbloqueado previamente
     try {
         const ownerData = JSON.parse(localStorage.getItem(LocalSave.ownerKey) || '{}');
         if (ownerData.role === 'admin') {
@@ -36,21 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     } catch (e) {}
-    
-    // 9. Abrir panel por parámetro de URL
     const params = new URLSearchParams(window.location.search);
     const panelParam = params.get('panel');
     if (panelParam && document.querySelector(`[data-target="panel-${panelParam}"]`)) {
         UI.openPanel(`panel-${panelParam}`, document.querySelector(`[data-target="panel-${panelParam}"]`));
     }
-    
-    // 10. Mensaje de bienvenida
-    UI.notify(
-        restored ? '🎮 Partida Restaurada' : '🏢 Nueva Empresa',
-        restored ? 'Tu imperio tecnológico continúa.' : 'Bienvenido a NexusCorp. ¡Construye tu imperio!',
-        'success'
-    );
-    
-    // 11. Autoguardado al salir
+    UI.notify(restored ? '🎮 Partida Restaurada' : '🏢 Nueva Empresa', restored ? 'Tu imperio tecnológico continúa.' : 'Bienvenido a NexusCorp. ¡Construye tu imperio!', 'success');
     window.addEventListener('beforeunload', () => LocalSave.save());
 });
