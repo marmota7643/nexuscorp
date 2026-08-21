@@ -1,27 +1,13 @@
 // main.js - Inicializador del Juego
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // Cargar sistemas corporativos nuevos antes de inicializar el juego.
-    const loadScript = (src) => new Promise((resolve, reject) => {
-        const s = document.createElement('script');
-        s.src = src;
-        s.onload = resolve;
-        s.onerror = reject;
-        document.head.appendChild(s);
-    });
-    try {
-        await loadScript('js/corporate.js');
-        await loadScript('js/supplychain.js');
-    } catch (e) {
-        console.error('NexusCorp: no se pudieron cargar módulos corporativos', e);
-    }
-
+document.addEventListener('DOMContentLoaded', () => {
     LocalSave.init();
     UI.init();
     const restored = LocalSave.load();
     if (typeof Research !== 'undefined' && Research.init) Research.init();
-    if (typeof Corporate !== 'undefined' && Corporate.init) Corporate.init();
     if (typeof SupplyChain !== 'undefined' && SupplyChain.init) SupplyChain.init();
+    if (typeof Corporate !== 'undefined' && Corporate.init) Corporate.init();
+    if (typeof ManufacturingIntegration !== 'undefined' && ManufacturingIntegration.init) ManufacturingIntegration.init();
     UI.updateAll();
     Engine.init();
     if (typeof CloudSync !== 'undefined' && CloudSync.init) CloudSync.init();
