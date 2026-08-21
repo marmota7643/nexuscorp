@@ -1,0 +1,2 @@
+[functions.nexus-api]
+verify_jwt = false

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusCorp - Devices Tycoon</title>
+    <!-- Fuentes premium de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- HUD SUPERIOR -->
+    <header id="hud-top" class="glass-panel">
+        <div class="hud-stats">
+            <div class="stat-box">
+                <span class="stat-label">Fondos</span>
+                <span id="ui-money" class="stat-value font-mono">$0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Ingresos / Mes</span>
+                <span id="ui-monthly-income" class="stat-value font-mono positive">+$0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Reputación</span>
+                <span id="ui-reputation" class="stat-value">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Fecha</span>
+                <span id="ui-date" class="stat-value">Ene 2000</span>
+            </div>
+        </div>
+
+        <div class="time-controls">
+            <button id="btn-pause" class="btn-time active-toggle" title="Pausar">II</button>
+            <button id="btn-play" class="btn-time" title="Normal">►</button>
+            <button id="btn-fast" class="btn-time" title="Rápido">►►</button>
+            <button id="btn-fast10" class="btn-time" title="x10">x10</button>
+            <button id="btn-fast25" class="btn-time" title="x25">x25</button>
+        </div>
+    </header>
+
+    <!-- CONTENEDOR PRINCIPAL DE PANELES -->
+    <main class="module-panels">
+        
+        <!-- PANEL: HARDWARE (Diseño y Fábrica) -->
+        <section id="panel-hardware" class="panel active glass-panel">
+            <header class="panel-header">
+                <h2>División de Hardware</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tab-disenar">Diseñar</button>
+                    <button class="tab-btn" data-tab="tab-catalogo">Catálogo</button>
+                    <button class="tab-btn" data-tab="tab-fabrica">Fábrica</button>
+                </div>
+            </header>
+            
+            <div class="panel-content">
+                <!-- Pestaña: Diseñar -->
+                <div id="tab-disenar" class="tab-content active">
+                    <div class="form-group">
+                        <label for="device-type">Tipo de Dispositivo</label>
+                        <select id="device-type" class="input-select">
+                            <option value="smartphone">Smartphone</option>
+                            <option value="tablet">Tablet</option>
+                            <option value="laptop">Laptop</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-name">Nombre del Producto</label>
+                        <input type="text" id="device-name" class="input-text" placeholder="Ej. Nexus X1">
+                    </div>
+                    <div class="form-group">
+                        <label for="device-material">Material del Cuerpo</label>
+                        <select id="device-material" class="input-select">
+                            <option value="plastic">Plástico</option>
+                            <option value="aluminum">Aluminio</option>
+                            <option value="glass">Cristal</option>
+                            <option value="titanium">Titanio</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-color">Color Principal</label>
+                        <select id="device-color" class="input-select">
+                            <option value="black">Negro Obsidiana</option>
+                            <option value="white">Blanco Perla</option>
+                            <option value="silver">Plata Estelar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-cam-layout">Disposición de Cámara</label>
+                        <select id="device-cam-layout" class="input-select">
+                            <option value="single">Simple</option>
+                            <option value="dual">Dual Horizontal</option>
+                            <option value="triple">Triple Vertical</option>
+                            <option value="matrix">Matriz Cuadrada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Componentes (Especificaciones)</label>
+                        <div id="spec-designer-grid" class="spec-designer">
+                            <!-- JS llena esto -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-os">Sistema Operativo</label>
+                        <select id="device-os" class="input-select">
+                            <!-- JS llena esto -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="device-price">Precio de Venta ($)</label>
+                        <input type="number" id="device-price" class="input-text" min="50" value="499">
+                    </div>
+                    
+                    <div id="design-cost-preview" class="design-preview glass-card">
+                        <div class="stat-row">
+                            <span>Costo de Fabricación:</span>
+                            <span id="preview-cost" class="font-mono">$0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Margen de Beneficio:</span>
+                            <span id="preview-margin" class="font-mono positive">$0</span>
+                        </div>
+                        <div class="progress-container">
+                            <span>Calidad Estimada</span>
+                            <div class="progress-bar">
+                                <div id="preview-quality-fill" class="progress-fill"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button id="btn-manufacture" class="btn-primary btn-block">Comenzar Fabricación</button>
+                </div>
+
+                <!-- Pestaña: Catálogo -->
+                <div id="tab-catalogo" class="tab-content hidden">
+                    <div class="catalog-controls">
+                        <h3>Tus Dispositivos</h3>
+                    </div>
+                    <div id="devices-list" class="list-container">
+                        <!-- JS llena esto -->
+                        <div class="empty-msg">No hay dispositivos en catálogo.</div>
+                    </div>
+                </div>
+
+                <!-- Pestaña: Fábrica -->
+                <div id="tab-fabrica" class="tab-content hidden">
+                    <div class="glass-card">
+                        <div class="stat-row">
+                            <span>Nivel de Fábrica:</span>
+                            <span id="factory-level">1</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Capacidad Mensual:</span>
+                            <span id="factory-capacity">1,000 unidades</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Líneas de Ensamblaje:</span>
+                            <span id="assembly-lines">1</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Inventario Total:</span>
+                            <span id="inventory-total">0</span>
+                        </div>
+                        <button id="btn-upgrade-factory" class="btn-secondary btn-block">Mejorar Fábrica</button>
+                    </div>
+                    
+                    <h3 class="mt-4">Inventario de Componentes</h3>
+                    <button id="btn-buy-components" class="btn-primary btn-block mb-3">Comprar Componentes a Granel</button>
+                    <div id="components-list" class="list-container">
+                        <!-- JS llena esto -->
+                        <div class="empty-msg">No hay componentes en inventario.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: INVESTIGACIÓN (I+D) -->
+        <section id="panel-research" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Investigación y Desarrollo (I+D)</h2>
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tab-research-active">Estado</button>
+                    <button class="tab-btn" data-tab="tab-research-tree">Árbol Tecnológico</button>
+                </div>
+            </header>
+            
+            <div class="panel-content">
+                <!-- Pestaña: Estado Activo -->
+                <div id="tab-research-active" class="tab-content active">
+                    <div class="glass-card mb-3">
+                        <div class="stat-row">
+                            <span>Investigadores:</span>
+                            <span id="researchers-count">0</span>
+                        </div>
+                        <div class="stat-row">
+                            <span>Costo de I+D (Mes):</span>
+                            <span id="researchers-cost" class="negative font-mono">$0</span>
+                        </div>
+                        <button id="btn-hire-researcher" class="btn-primary btn-block mt-2">Contratar Investigador</button>
+                    </div>
+                    
+                    <h3>Investigaciones Activas</h3>
+                    <div id="research-active" class="list-container">
+                        <div class="empty-msg">No hay proyectos de investigación activos.</div>
+                    </div>
+                </div>
+
+                <!-- Pestaña: Árbol Tecnológico -->
+                <div id="tab-research-tree" class="tab-content hidden">
+                    <div id="research-branches" class="branch-selector mb-3">
+                        <!-- JS genera botones .branch-btn -->
+                    </div>
+                    <div id="research-list" class="research-grid">
+                        <!-- JS genera .research-node -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: SOFTWARE (TechStart) -->
+        <section id="panel-software" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>División de Software (TechStart)</h2>
+            </header>
+            <div class="panel-content">
+                <div class="glass-card mb-3">
+                    <div class="stat-row">
+                        <span>Desarrolladores:</span>
+                        <span id="tech-devs-count">0</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Costo de Nómina (Mes):</span>
+                        <span id="tech-devs-cost" class="negative font-mono">$0</span>
+                    </div>
+                    <button id="btn-hire-dev" class="btn-secondary btn-block mt-2">Contratar Desarrollador</button>
+                </div>
+
+                <h3>Nuevo Proyecto</h3>
+                <div class="form-group">
+                    <select id="software-type" class="input-select mb-2">
+                        <option value="social">Red Social</option>
+                        <option value="game">Videojuego</option>
+                        <option value="enterprise">Software Empresarial</option>
+                    </select>
+                    <button id="btn-new-project" class="btn-primary btn-block">Iniciar Desarrollo</button>
+                </div>
+
+                <h3>Proyectos en Desarrollo</h3>
+                <div id="tech-projects-list" class="list-container mb-3">
+                    <div class="empty-msg">No hay desarrollos activos.</div>
+                </div>
+
+                <h3>Software Activo en el Mercado</h3>
+                <div id="active-products-list" class="list-container">
+                    <div class="empty-msg">No tienes productos en el mercado.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: RECURSOS HUMANOS -->
+        <section id="panel-hr" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Recursos Humanos (RRHH)</h2>
+            </header>
+            <div class="panel-content">
+                <div class="glass-card mb-3">
+                    <div class="stat-row">
+                        <span>Nivel de Oficina:</span>
+                        <span id="office-level">1</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Capacidad Máxima:</span>
+                        <span id="office-capacity">10 empleados</span>
+                    </div>
+                    <button id="btn-upgrade-office" class="btn-secondary btn-block mt-2">Ampliar Oficina</button>
+                </div>
+
+                <h3>Contratación Directa</h3>
+                <div class="btn-admin-grid mb-3">
+                    <button id="btn-hire-designer" class="btn-secondary">Contratar Diseñador</button>
+                    <button id="btn-hire-programmer" class="btn-secondary">Contratar Programador</button>
+                    <button id="btn-hire-engineer" class="btn-secondary">Contratar Ingeniero</button>
+                    <button id="btn-hire-tester" class="btn-secondary">Contratar Tester</button>
+                </div>
+
+                <h3>Nómina Activa</h3>
+                <div id="employees-list" class="list-container">
+                    <!-- JS llena la lista con IDs dinámicos, SIN HARDCODEAR -->
+                    <div class="empty-msg">No hay empleados contratados todavía.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: MARKETING -->
+        <section id="panel-marketing" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Marketing y Hype</h2>
+            </header>
+            <div class="panel-content">
+                <div class="glass-card mb-3 text-center">
+                    <h3>Nivel de Hype Actual</h3>
+                    <div class="text-4xl font-bold tech-text my-2" id="marketing-hype-value">0%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div id="marketing-hype-fill" class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    <p class="text-sm mt-2">El Hype aumenta las ventas iniciales de nuevos dispositivos.</p>
+                </div>
+
+                <h3>Campañas de Marketing</h3>
+                <div class="grid gap-3">
+                    <button id="btn-campaign-leaks" class="btn-secondary text-left">
+                        <strong>Filtrar Rumores</strong><br>
+                        <span class="text-sm opacity-70">Aumenta el hype lentamente. Bajo costo.</span>
+                    </button>
+                    <button id="btn-campaign-influencers" class="btn-secondary text-left">
+                        <strong>Patrocinar Influencers</strong><br>
+                        <span class="text-sm opacity-70">Aumento moderado del hype. Costo medio.</span>
+                    </button>
+                    <button id="btn-campaign-keynote" class="btn-primary text-left">
+                        <strong>Evento Keynote</strong><br>
+                        <span class="text-sm opacity-70">Gran impacto en hype. Costo altísimo.</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: RIVALES (Mercado Global) -->
+        <section id="panel-rivals" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Mercado Global</h2>
+            </header>
+            <div class="panel-content">
+                
+                <div class="glass-card mb-3">
+                    <h3>Pulso del Mercado</h3>
+                    <div id="ui-market-pulse" class="font-mono text-xl tech-text my-2">Estable</div>
+                    <p id="market-summary" class="text-sm">La demanda general se mantiene sin cambios significativos.</p>
+                </div>
+
+                <h3 class="mt-3">Tendencias de Demanda</h3>
+                <div id="market-demand-list" class="list-container mb-3">
+                    <!-- JS llena esto -->
+                    <div class="empty-msg">Analizando tendencias...</div>
+                </div>
+
+                <h3 class="mt-3">Cuota de Mercado (Rivales)</h3>
+                <div id="rivals-list" class="list-container">
+                    <!-- JS llena los rivales dinámicamente -->
+                    <div class="empty-msg">Cargando datos de competencia...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: SISTEMA OPERATIVO (OS) -->
+        <section id="panel-os" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Diseñador de Sistema Operativo</h2>
+            </header>
+            <div class="panel-content">
+                
+                <div class="glass-card mb-3">
+                    <div class="form-group">
+                        <label for="os-name">Nombre del OS</label>
+                        <input type="text" id="os-name" class="input-text" placeholder="Ej. NexusOS">
+                    </div>
+                    <div class="form-group">
+                        <label for="os-kernel">Núcleo (Kernel)</label>
+                        <select id="os-kernel" class="input-select">
+                            <option value="monolithic">Monolítico (Rápido, Rígido)</option>
+                            <option value="microkernel">Microkernel (Seguro, Lento)</option>
+                            <option value="hybrid">Híbrido (Equilibrado)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="os-ui">Interfaz de Usuario (UI)</label>
+                        <select id="os-ui" class="input-select">
+                            <option value="minimalist">Minimalista</option>
+                            <option value="skeuomorphic">Esqueumórfica</option>
+                            <option value="neumorphic">Neumórfica</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="os-assistant">Asistente Virtual</label>
+                        <select id="os-assistant" class="input-select">
+                            <option value="none">Sin asistente</option>
+                            <option value="basic">Básico (Comandos de voz)</option>
+                            <option value="ai">IA Avanzada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="os-store">Tienda de Apps</label>
+                        <select id="os-store" class="input-select">
+                            <option value="closed">Cerrada (Mayor seguridad, menos apps)</option>
+                            <option value="open">Abierta (Menor seguridad, más apps)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="os-security">Nivel de Seguridad</label>
+                        <select id="os-security" class="input-select">
+                            <option value="low">Básica (Protección estándar)</option>
+                            <option value="high">Avanzada (Cifrado militar)</option>
+                        </select>
+                    </div>
+                    <button id="btn-create-os" class="btn-primary btn-block">Desarrollar OS</button>
+                </div>
+
+                <h3>Tus Sistemas Operativos</h3>
+                <div id="os-list" class="list-container">
+                    <div class="empty-msg">No has creado ningún Sistema Operativo.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: BANCO -->
+        <section id="panel-bank" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Banco Central</h2>
+            </header>
+            <div class="panel-content">
+                <div class="glass-card text-center mb-3">
+                    <h3>Deuda Actual</h3>
+                    <div id="bank-debt" class="text-4xl font-bold negative font-mono my-2">$0</div>
+                    <div class="stat-row justify-center mt-2">
+                        <span>Tasa de Interés: </span>
+                        <span id="bank-interest" class="ml-2 font-mono">5% mensual</span>
+                    </div>
+                </div>
+
+                <div class="grid gap-3">
+                    <button id="btn-take-loan" class="btn-secondary">Pedir Préstamo ($1,000,000)</button>
+                    <button id="btn-pay-loan" class="btn-primary">Pagar Deuda ($1,000,000)</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: CONFIGURACIÓN -->
+        <section id="panel-config" class="panel hidden glass-panel">
+            <header class="panel-header">
+                <h2>Configuración de la Empresa</h2>
+            </header>
+            <div class="panel-content">
+                <div class="glass-card mb-3">
+                    <div class="form-group">
+                        <label for="company-name-input">Nombre de la Empresa</label>
+                        <input type="text" id="company-name-input" class="input-text" placeholder="Tu Empresa Inc.">
+                    </div>
+                    <button id="btn-save-company-name" class="btn-primary btn-block">Guardar Nombre</button>
+                </div>
+
+                <div class="glass-card mb-3">
+                    <h3>Perfil del CEO</h3>
+                    <div class="stat-row">
+                        <span>Ciudad Sede:</span>
+                        <span id="ui-city-level">Silicon Valley</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Rango:</span>
+                        <span id="owner-badge" class="badge">Emprendedor</span>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 class="negative">Zona de Peligro</h3>
+                    <p class="text-sm mb-2">Al reiniciar se borrarán todas las partidas locales guardadas.</p>
+                    <button id="btn-reset-save" class="btn-danger btn-block">Reiniciar Todo el Progreso</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL: ADMINISTRADOR (DEBE ESTAR DENTRO DE MODULE-PANELS) -->
+        <section id="panel-admin" class="panel hidden glass-panel border-gold">
+            <header class="panel-header">
+                <h2 class="gold-text">Panel de Dios (Admin)</h2>
+            </header>
+            <div class="panel-content">
+                
+                <div id="admin-login" class="glass-card mb-3">
+                    <div class="form-group">
+                        <label for="admin-passphrase">Contraseña del Sistema</label>
+                        <input type="password" id="admin-passphrase" class="input-text" placeholder="Ingrese frase de paso">
+                    </div>
+                    <button id="btn-admin-connect" class="btn-primary btn-block">Acceder a Servidores</button>
+                </div>
+
+                <div id="admin-powers" class="admin-powers hidden">
+                    
+                    <div class="admin-power-group">
+                        <h3>Estado de Nube</h3>
+                        <div id="admin-cloud-status" class="stat-row mb-2">Desconectado</div>
+                        <div id="admin-remote-controls" class="stat-row mb-2">Controles deshabilitados</div>
+                        <div class="form-group">
+                            <label>Compañías en red:</label>
+                            <select id="admin-companies" class="input-select mb-2"></select>
+                            <div class="stat-row">
+                                <span>Seleccionada:</span>
+                                <span id="admin-selected-company">Ninguna</span>
+                            </div>
+                            <div class="stat-row">
+                                <span>Fondos Red:</span>
+                                <span id="admin-money">$0</span>
+                            </div>
+                            <div class="stat-row">
+                                <span>Reputación Red:</span>
+                                <span id="admin-remote-reputation">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="admin-power-group mt-3">
+                        <h3>Inyección de Capital</h3>
+                        <div class="admin-btn-grid mb-2">
+                            <button id="btn-admin-add-100k" class="btn-admin-power">+ $100K</button>
+                            <button id="btn-admin-add-500k" class="btn-admin-power">+ $500K</button>
+                            <button id="btn-admin-add-1m" class="btn-admin-power">+ $1M</button>
+                        </div>
+                        <div class="form-group flex gap-2">
+                            <input type="number" id="admin-custom-amount" class="input-text" placeholder="Cantidad exacta" style="flex: 1;">
+                            <button id="btn-admin-custom-money" class="btn-admin-power">Añadir</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-power-group mt-3">
+                        <h3>Progreso Acelerado</h3>
+                        <button id="btn-admin-complete-research" class="btn-admin-power btn-block mb-2">Completar I+D Actual</button>
+                        <button id="btn-admin-unlock-all" class="btn-admin-power btn-block mb-2">Desbloquear Todo (I+D + OS)</button>
+                        <button id="btn-admin-toggle-sandbox" class="btn-admin-power btn-block">Modo Sandbox (Dinero Infinito)</button>
+                    </div>
+
+                    <div class="admin-power-group mt-3">
+                        <h3>Manipulación de Mercado</h3>
+                        <label for="admin-reputation-slider">Reputación Mágica</label>
+                        <input type="range" id="admin-reputation-slider" min="0" max="10000" value="0" class="input-range">
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main> <!-- FIN MODULE PANELS -->
+
+    <!-- HUD INFERIOR (Navegación) -->
+    <nav id="hud-bottom" class="glass-panel">
+        <button class="nav-btn active" data-target="panel-hardware">💻 Hardware</button>
+        <button class="nav-btn" data-target="panel-research">🔬 I+D</button>
+        <button class="nav-btn" data-target="panel-software">💾 Software</button>
+        <button class="nav-btn" data-target="panel-hr">👥 RRHH</button>
+        <button class="nav-btn" data-target="panel-marketing">📈 Marketing</button>
+        <button class="nav-btn" data-target="panel-rivals">🌍 Rivales</button>
+        <button class="nav-btn" data-target="panel-os">⚙️ OS</button>
+        <button class="nav-btn" data-target="panel-bank">🏦 Banco</button>
+        <button class="nav-btn" data-target="panel-config">🔧 Config</button>
+        <button id="btn-nav-admin" class="nav-btn gold-text" data-target="panel-admin" style="display: none;">⚡ Admin</button>
+    </nav>
+
+    <!-- ELEMENTOS EXTERNOS A LOS PANELES -->
+    
+    <!-- Modal de Reseñas -->
+    <div id="review-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-card text-center">
+            <h2>Reseñas del Producto</h2>
+            <div id="review-score-value" class="text-5xl font-bold tech-text my-4">0/10</div>
+            <p id="review-score-text" class="text-lg mb-4">Analizando recepción crítica...</p>
+            <button id="btn-close-review" class="btn-primary">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- Centro de Notificaciones -->
+    <div id="notification-center"></div>
+
+    <!-- SCRIPTS EN ORDEN OBLIGATORIO -->
+    <script src="cloud-config.js"></script>
+    <script src="local-save.js"></script>
+    <script src="engine.js"></script>
+    <script src="techstart.js"></script>
+    <script src="manucore.js"></script>
+    <script src="research.js"></script>
+    <script src="os-designer.js"></script>
+    <script src="hr.js"></script>
+    <script src="marketing.js"></script>
+    <script src="rivals.js"></script>
+    <script src="cloud-sync.js"></script>
+    <script src="ui.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
