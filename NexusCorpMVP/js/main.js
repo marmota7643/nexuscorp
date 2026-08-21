@@ -1,9 +1,31 @@
 // main.js - Inicializador del Juego
 
-document.addEventListener('DOMContentLoaded', () => {
+function loadNexusScript(src) {
+    return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve();
+        const script = document.createElement('script');
+        script.src = src;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`No se pudo cargar ${src}`));
+        document.head.appendChild(script);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
     LocalSave.init();
     UI.init();
     const restored = LocalSave.load();
+
+    // Los sistemas nuevos se cargan en orden porque dependen unos de otros.
+    try {
+        await loadNexusScript('supplychain.js');
+        await loadNexusScript('corporate.js');
+        await loadNexusScript('manufacturing-integration.js');
+    } catch (error) {
+        console.error('[NexusCorp] Error cargando módulos corporativos:', error);
+        UI.notify('⚠️ Módulo no cargado', 'Uno de los sistemas corporativos no pudo inicializarse.', 'alert');
+    }
+
     if (typeof Research !== 'undefined' && Research.init) Research.init();
     if (typeof SupplyChain !== 'undefined' && SupplyChain.init) SupplyChain.init();
     if (typeof Corporate !== 'undefined' && Corporate.init) Corporate.init();
