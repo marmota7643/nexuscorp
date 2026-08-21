@@ -14,26 +14,26 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - name: Install dependencies
-        run: npm install
-      - name: Build web app
-        run: npm run build
-      - name: Add Android platform
-        run: npx cap add android
-      - name: Sync Capacitor
-        run: npx cap sync android
+          node-version: 20
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 21
+          java-version: '21'
           cache: gradle
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build web app
+        run: npm run build
+      - name: Create Android project
+        run: npx cap add android
+      - name: Sync Capacitor
+        run: npx cap sync android
       - name: Build debug APK
         working-directory: android
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
       - name: Verify APK
         run: test -s android/app/build/outputs/apk/debug/app-debug.apk
       - name: Upload playable APK
