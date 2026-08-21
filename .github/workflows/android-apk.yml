@@ -14,8 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
+          node-version: 22
       - name: Install dependencies
         run: npm install
       - name: Build web app
@@ -28,16 +27,19 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 17
+          java-version: 21
           cache: gradle
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
       - name: Build debug APK
         working-directory: android
         run: ./gradlew assembleDebug
-      - name: Upload APK
+      - name: Verify APK
+        run: test -s android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload playable APK
         uses: actions/upload-artifact@v4
         with:
-          name: NexusCorp-debug-apk
+          name: NexusCorp-playable-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+          retention-days: 30
