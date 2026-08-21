@@ -1,0 +1,1 @@
+{"name":"nexuscorp","version":"0.1.0","private":true,"scripts":{"build":"mkdir -p dist && cp -R NexusCorpMVP/. dist/"},"dependencies":{"@capacitor/android":"^7.4.3","@capacitor/core":"^7.4.3","@capacitor/cli":"^7.4.3"},"devDependencies":{}}
